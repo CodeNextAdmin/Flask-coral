@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coral Flask Servo!</title>
+    <style>
+
+        *,
+        *:before,
+        *:after {
+        box-sizing: border-box;
+        } 
+
+        :root{
+            --form-control-color: rebeccapurple;
+            }
+
+        body {
+            margin: 0;
+            text-align:center;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: rgb(136, 204, 224);
+            color:rgb(11, 57, 100);
+            }
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 75%
+            }
+
+        input[type='range']{
+
+            width:60%;
+            height:20px;
+        }
+
+        .radio-btns-group{
+
+            display: inline-flex;
+        }
+
+        .radio-btn-container{
+
+            flex-direction: row;
+            margin:12px;
+        }
+
+        label{
+
+            font-family: system-ui, sans-serif;
+            font-size: 1.2rem;         
+            line-height: 1.1;
+        }
+ 
+
+
+
+
+      
+         
+    </style>
+</head>
+<body>
+    <h1>Livestreaming with Coral</h1>
+    <p>Move the Servo to move the camera</p>
+
+    <form  method="POST">
+        <p><input id="cam-slider" type="range" min="500" max="2000" value="1000" name="slider"></p>
+
+    </form>
+
+      
+    <img src="{{ url_for('stream') }}">
+
+    <p id="mode-label"></p>
+
+     <div class="radio-btns-group">
+        <div class="radio-btn-container">
+            <input type="radio" value="detect-faces" id="faces-radio-btn" name="stream-mode-select"> 
+            <label for="faces-radio-btn">Detect Faces</label>
+        </div>
+        <div class="radio-btn-container">
+            <input type="radio" value="detect-objects" id="objects-radio-btn" name="stream-mode-select"> 
+            <label for="objects-radio-btn">Detect Objects</label>
+        </div>
+        <div class="radio-btn-container">
+            <input type="radio" value="detect-none" id="none-radio-btn" name="stream-mode-select"> 
+            <label for="none-radio-btn">No detection</label>
+        </div>
+            
+    </div>
+    
+    <hr>
+ 
+    <form method="POST">
+        <p><input id="capture-btn" type="button" name="capture-btn" value="Take Pic"></p>
+
+    </form>
+
+    <script>
+        let req = new XMLHttpRequest;
+        let slider = document.querySelector("#cam-slider");
+        let slider_value;
+        let button = document.querySelector("#capture-btn")
+        let mode_label = document.querySelector("#mode-label")
+
+        slider.oninput= function(){
+            //let req = new XMLHttpRequest;
+            slider_value = parseInt(this.value);
+            req.open('POST', '/slider')
+            req.send(slider_value)
+        }
+
+       button.onclick = function(){
+
+            req.open('POST', '/capture')
+            req.send("Take pic!")
+       
+        }
+
+        const radioButtons = document.querySelectorAll('input[name="stream-mode-select"]');
+
+        for(const radioButton of radioButtons){
+
+            //add an event listener to all radio btns, run switchMode func.
+            radioButton.addEventListener('change', switchMode);
+        }  
+
+        function switchMode(e){
+
+            console.log(e)
+            if (this.checked){
+
+                mode_label.innerText = `You selected ${this.value}`;
+                req.open('POST', '/set_mode')
+                req.send(this.value)
+            }
+
+
+        }
+
+    
+    </script>
+    
+</body>
+
+</html>
