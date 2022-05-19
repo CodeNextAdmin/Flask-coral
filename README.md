@@ -41,7 +41,7 @@ This project requires the AIY Maker Kit from Coral, including the model files an
 6. Clone this repo into the `aiy-maker-kit` directory:
 
    ```
-   $ git clone ...
+   $ git clone https://github.com/CodeNextPaco/Flask-coral.git
    ```
    
 7. Connect your Raspberry Pi Camera (and servo, if you have one, to GPIO 17)
@@ -65,5 +65,10 @@ Like the  `aiy-maker-kit` examples, the Flask app can be run from the Terminal. 
  
  ### Extensions
  
- - Add more Coral models and functions to the `raspi-video.py` 
+ - Add more Coral models and functions to the `raspi-camera.py` following the pattern. You will have to update the `app.py` file as well to handle the change.
+ - Build another Flask route to display saved images.
+ - Follow the `aiy-maker-kit` examples to add more functionality to the Flask app, like pose detection, training models. 
+
+
+***credit to Miguel Grinberg for the initial [Flask livestream](https://blog.miguelgrinberg.com/post/video-streaming-with-flask) tutorial***
  
