@@ -59,7 +59,7 @@ Like the  `aiy-maker-kit` examples, the Flask app can be run from the Terminal. 
  
  ### Things to consider
  
- - You open the app in other browsers, connected on the same network. 
+ - You can open the app in other browsers, connected on the same network. 
  - If you are already running the app in one browser, the feed will not work on a second one.
  - You can change the directory where the images save. 
  
