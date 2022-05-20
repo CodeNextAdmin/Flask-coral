@@ -34,7 +34,7 @@ class RPiCamera(object):
     def get_frame_with_face_detect(self):
         frame = self.stream.read()
 
-        #detect faces before converting to jpgeg
+        #detect faces before converting to jpeg
         faces = face_detector.get_objects(frame, threshold=0.1)
         vision.draw_objects(frame, faces)
         result, jpeg = cv2.imencode('.jpg', frame)
