@@ -24,7 +24,7 @@ app = Flask(__name__)
 stream_mode  = "detect-faces"
 
 def get_feed(camera):
-    global stream_mode
+    global stream_mode, current_frame
     
     current_frame = camera.get_frame() #save it as a jpeg to keep it around for storing it, if in capture mode.
     
